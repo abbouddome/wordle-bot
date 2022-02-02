@@ -1,15 +1,15 @@
 from collections import defaultdict
 from enum import Enum
 
-class Status(Enum):
+class TILE(Enum):
     GREY = 0
     YELLOW = 1
     GREEN = 2
 
 STR_TO_STATUS = {
-    "absent": Status.GREY,
-    "present": Status.YELLOW,
-    "correct": Status.GREEN
+    "absent": TILE.GREY,
+    "present": TILE.YELLOW,
+    "correct": TILE.GREEN
 }
 
 
@@ -32,6 +32,24 @@ class Pattern:
         for data in self.pattern:
             str_pattern += str(data[0])
         return str_pattern
+
+    @staticmethod
+    def count_occurences(guess):
+        """Returns dict that says the occurences of letters"""
+        occurences = defaultdict(int)
+        for letter in guess:
+            occurences[letter] += 1
+        return occurences
+
+    @staticmethod
+    def count_tile_occurences(pattern):
+        """Returns dict that says the occurences of green and yellow tiles"""
+        occurences = defaultdict(int)
+        for tile, letter in pattern:
+            if tile == TILE.GREEN or tile == TILE.YELLOW:
+                occurences[letter] += 1
+        return occurences
+        
 
 
     
