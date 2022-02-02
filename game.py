@@ -11,12 +11,13 @@ WEBSITE = "https://www.powerlanguage.co.uk/wordle/"
 
 class Game():
     def __init__(self):
+        self.running = False
+        self.turn = 0
         self.browser = webdriver.Chrome()
         self.browser.get(WEBSITE)
         time.sleep(2)
         self.background = self.browser.find_element(By.TAG_NAME, "html")
         self.background.click()
-        self.turn = 0
 
     def play_turn(self, word):
         """Types word, returns the result"""
@@ -33,12 +34,15 @@ class Game():
 
         bs = BeautifulSoup(row, 'html.parser')
         results = [tile_data.get('evaluation') for tile_data in bs.findAll('game-tile')]
-        return Turn(word, results)
+        turn = Turn(word, results)
 
-    def end_game():
-        pass
+        if turn.pattern.readable_pattern == "22222":
+            self.running = False
+        
+        return turn
+
 
 class Turn:
     def __init__(self, guess, results):
         self.guess = guess
-        self.pattern = Pattern(results, guess, str_to_pattern=True)
+        self.pattern = Pattern(results, guess, turn_to_pattern=True)

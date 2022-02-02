@@ -14,13 +14,14 @@ STR_TO_STATUS = {
 
 
 class Pattern:
-    def __init__(self, data, word, str_to_pattern=False):
-        if str_to_pattern:
-            self.pattern = self.generate_pattern_from_str(data, word)
+    def __init__(self, data, word, turn_to_pattern=False):
+        if turn_to_pattern:
+            self.pattern = self.generate_pattern_from_turn(data, word)
         else:
             self.pattern = self.generate_pattern(data, word)
 
-    def generate_pattern_from_str(self, str_status, guess):
+    def generate_pattern_from_turn(self, str_status, guess):
+
         return [(STR_TO_STATUS[str], letter) for str, letter in zip(str_status, guess)]
 
     def generate_pattern(self):
