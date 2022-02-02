@@ -38,15 +38,14 @@ class Game():
 
         if turn.pattern.readable_pattern() == "22222":
             self.running = False
-            time.sleep(3)
-            shadow_stats = self.browser.execute_script("return arguments[0].shadowRoot.getElementById('share-button')", host)
+            """time.sleep(3)
+            game_modal = game.find_element(By.TAG_NAME, "game-modal")
+            shadow_stats = self.browser.execute_script("return arguments[0].shadowRoot.getElementsByCssSelector('div')", game_modal)
             #game_stats = self.browser.execute_script("return arguments[0].shadowRoot.getElementByClassName('share-button')", shadow_stats)
             print(shadow_stats)
-            #print(game_stats)
-            wordle_process = None
-            return wordle_process
-        else:
-            return turn
+            #print(game_stats)"""
+        
+        return turn
 
 
 class Turn:
