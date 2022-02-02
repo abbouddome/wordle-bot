@@ -23,7 +23,7 @@ class Game():
         """Types word, returns the result"""
         self.background.send_keys(word)
         self.background.send_keys(Keys.ENTER)
-        time.sleep(4)
+        time.sleep(3)
 
         host = self.browser.find_element(By.TAG_NAME, "game-app")
         game = self.browser.execute_script("return arguments[0].shadowRoot.getElementById('game')", host)
@@ -36,10 +36,17 @@ class Game():
         results = [tile_data.get('evaluation') for tile_data in bs.findAll('game-tile')]
         turn = Turn(word, results)
 
-        if turn.pattern.readable_pattern == "22222":
+        if turn.pattern.readable_pattern() == "22222":
             self.running = False
-        
-        return turn
+            time.sleep(3)
+            shadow_stats = self.browser.execute_script("return arguments[0].shadowRoot.getElementById('share-button')", host)
+            #game_stats = self.browser.execute_script("return arguments[0].shadowRoot.getElementByClassName('share-button')", shadow_stats)
+            print(shadow_stats)
+            #print(game_stats)
+            wordle_process = None
+            return wordle_process
+        else:
+            return turn
 
 
 class Turn:

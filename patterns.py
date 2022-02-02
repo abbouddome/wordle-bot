@@ -46,8 +46,13 @@ class Pattern:
     def readable_pattern(self):
         """Returns the string version of the pattern"""
         str_pattern = ""
-        for data in self.pattern:
-            str_pattern += str(data[0])
+        for tile, _ in self.pattern:
+            if tile == TILE.GREY:
+                str_pattern += "0"
+            if tile == TILE.YELLOW:
+                str_pattern += "1"
+            if tile == TILE.GREEN:
+                str_pattern += "2"
         return str_pattern
 
     @staticmethod
