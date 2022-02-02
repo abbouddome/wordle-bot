@@ -35,10 +35,10 @@ class Pattern:
         occurences = defaultdict(int)
         for a_letter, b_letter in zip(word, guess):
             if a_letter == b_letter:
-                pattern.append(TILE.GREEN, b_letter)
+                pattern.append((TILE.GREEN, b_letter))
             else:
-                tile = TILE.YELLOW if b_letter in word and occurences[b_letter] < word.count(b_letter) - greens(b_letter) else TILE.GREY
-                pattern.append(tile, b_letter)
+                tile = TILE.YELLOW if b_letter in word and occurences[b_letter] < word.count(b_letter) - greens[b_letter] else TILE.GREY
+                pattern.append((tile, b_letter))
                 occurences[b_letter] += 1
         
         return pattern 

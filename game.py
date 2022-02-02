@@ -11,7 +11,7 @@ WEBSITE = "https://www.powerlanguage.co.uk/wordle/"
 
 class Game():
     def __init__(self):
-        self.running = False
+        self.running = True
         self.turn = 0
         self.browser = webdriver.Chrome()
         self.browser.get(WEBSITE)
@@ -23,7 +23,7 @@ class Game():
         """Types word, returns the result"""
         self.background.send_keys(word)
         self.background.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(4)
 
         host = self.browser.find_element(By.TAG_NAME, "game-app")
         game = self.browser.execute_script("return arguments[0].shadowRoot.getElementById('game')", host)
