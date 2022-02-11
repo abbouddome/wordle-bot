@@ -15,8 +15,8 @@ class WordleBot():
             info_gains = self.generate_all_weights()
             optimal_word = info_gains[0][1]
         else:
-            #optimal_word = random.choice(self.dictionary.words_remianing)
-            optimal_word = "soare"
+            optimal_word = random.choice(self.dictionary.words_remianing)
+            #optimal_word = "soare"
         return optimal_word
 
     def turn_aftermath(self, turn):
