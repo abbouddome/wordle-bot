@@ -2,18 +2,16 @@ import time
 from game import Game
 from bot import WordleBot
 
-def application():
+def application(input_word=None):
     game = Game()
     bot = WordleBot()
-    automatic = True
-    input_word = "pedro"
     while game.running:
         try:
-            if automatic:
+            if not input_word:
                 word = bot.calculate_optimal_word() 
             else:
                 word = input_word
-                automatic = True
+                input_word = None
             turn_result = game.play_turn(word)
             if game.running:
                 bot.turn_aftermath(turn_result)

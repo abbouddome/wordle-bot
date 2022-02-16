@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from patterns import Pattern
 
 
-WEBSITE = "https://www.powerlanguage.co.uk/wordle/"
+WEBSITE = "https://www.nytimes.com/games/wordle/index.html"
 
 
 class Game():
