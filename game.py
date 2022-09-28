@@ -16,37 +16,33 @@ class Game():
         self.browser = webdriver.Chrome()
         self.browser.get(WEBSITE)
         time.sleep(2)
+        self.delete_popups()
         self.background = self.browser.find_element(By.TAG_NAME, "html")
-        self.background.click()
+
+    def delete_popups(self):
+        "Gets rid of the cookies and rules popups"
+        cookies = self.browser.find_element(By.ID, "pz-gdpr-btn-closex")
+        cookies.click()
+        rules = self.browser.find_element(By.CLASS_NAME, "game-icon")
+        rules.click()
 
     def play_turn(self, word):
         """Types word, returns the result"""
         self.background.send_keys(word)
         self.background.send_keys(Keys.ENTER)
+        self.turn += 1
         time.sleep(3)
 
-        host = self.browser.find_element(By.TAG_NAME, "game-app")
-        game = self.browser.execute_script("return arguments[0].shadowRoot.getElementById('game')", host)
-        shadow_board = game.find_element(By.ID, "board")
-        rows = self.browser.execute_script("return arguments[0].getElementsByTagName('game-row')", shadow_board)
-        row = self.browser.execute_script("return arguments[0].shadowRoot.querySelector('.row').innerHTML", rows[self.turn])
-        self.turn += 1
-
-        bs = BeautifulSoup(row, 'html.parser')
-        results = [tile_data.get('evaluation') for tile_data in bs.findAll('game-tile')]
+        row = self.browser.find_element(By.XPATH, f"""//*[@id="wordle-app-game"]/div[1]/div/div[{self.turn}]""")
+        tiles = row.find_elements(By.TAG_NAME, "div")
+        results = [tile.get_attribute("data-state") for tile in tiles if tile.get_attribute("data-state")]
+        print(results)
         turn = Turn(word, results)
 
         if turn.pattern.readable_pattern() == "22222":
             self.running = False
-            """time.sleep(3)
-            game_modal = game.find_element(By.TAG_NAME, "game-modal")
-            shadow_stats = self.browser.execute_script("return arguments[0].shadowRoot.getElementsByCssSelector('div')", game_modal)
-            #game_stats = self.browser.execute_script("return arguments[0].shadowRoot.getElementByClassName('share-button')", shadow_stats)
-            print(shadow_stats)
-            #print(game_stats)"""
-        
+    
         return turn
-
 
 class Turn:
     def __init__(self, guess, results):

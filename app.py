@@ -2,6 +2,9 @@ import time
 from game import Game
 from bot import WordleBot
 
+def log_score(starting_guess, answer, turn_number):
+    pass
+
 def application(input_word=None):
     game = Game()
     bot = WordleBot()
